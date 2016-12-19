@@ -7,46 +7,9 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 // Start directly on the ui page
-const url = "http://localhost:8000/ui";
+const url = "http://localhost:1880/ui";
 
 const {Menu, MenuItem} = electron;
-
-var http = require('http');
-var express = require("express");
-var RED = require("node-red");
-
-// Create an Express app
-var red_app = express();
-
-// Add a simple route for static content served from 'public'
-//red_app.use("/",express.static("public"));
-
-// Create a server
-var server = http.createServer(red_app);
-
-// Create the settings object - see default settings.js file for other options
-var settings = {
-    verbose: true,
-    httpAdminRoot:"/admin",
-    httpNodeRoot: "/",
-    userDir: __dirname,
-    flowFile: "flows.json",
-    functionGlobalContext: { }    // enables global context
-};
-
-// Initialise the runtime with a server and settings
-RED.init(server,settings);
-
-// Serve the editor UI from /red
-red_app.use(settings.httpAdminRoot,RED.httpAdmin);
-
-// Serve the http nodes UI from /api
-red_app.use(settings.httpNodeRoot,RED.httpNode);
-
-server.listen(8000);
-
-// Start the runtime
-RED.start();
 
 // Create the Application's main menu
 var template = [{
